@@ -11,19 +11,15 @@ let friends = {
 
 // GET request: Retrieve all friends
 router.get("/",(req,res)=>{
-
   // Send JSON response with formatted friends data
     res.send(JSON.stringify(friends,null,4));
-
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
 });
 
 // GET by specific ID request: Retrieve a single friend with email ID
 router.get("/:email",(req,res)=>{
     const email = req.params.email;
     res.send(friends[email]);
-  res.send("Yet to be implemented")//This line is to be replaced with actual return value
-});
+ });
 
 
 // POST request: Add a new friend
@@ -33,9 +29,9 @@ router.post("/",(req,res)=>{
         // Create or update friend's details based on provided email
         friends[req.body.email] = {
             "firstName": req.body.firstName,
-            // Add similarly for lastName
-            // Add similarly for DOB
-        };
+            "lastName":req.body.lastName,
+            "DOB":req.body.DOB
+            };
     }
     // Send response indicating user addition
     res.send("The user" + (' ') + (req.body.firstName) + " Has been added!");
@@ -49,13 +45,23 @@ router.put("/:email", (req, res) => {
         const email = req.params.email;
         let friend = friends[email];  // Retrieve friend object associated with email
         if (friend) {  // Check if friend exists
+            let firstName=req.body.firstName;
+            let lastName=req.body.lastName;
             let DOB = req.body.DOB;
+            
             // Add similarly for firstName
             // Add similarly for lastName
             // Update DOB if provided in request body
+             if (firstName) {
+                friend["firstName"] = firstName;
+            }
+            if (lastName) {
+                friend["lastName"] = lastName;
+            }
             if (DOB) {
                 friend["DOB"] = DOB;
             }
+
             // Add similarly for firstName
             // Add similarly for lastName
             friends[email] = friend;  // Update friend details in 'friends' object
